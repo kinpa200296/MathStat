@@ -64,12 +64,12 @@
                 </Grid.RowDefinitions>
                 <ListView Margin="5" Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Log2}"/>
                 <TabControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" >
-                    <TabItem Header="Гистограмма">
+                    <TabItem Header="Гистограмма, Плотность распределения">
                         <d3:ChartPlotter Margin="5" x:Name="Plotter2BarChart">
 
                         </d3:ChartPlotter>
                     </TabItem>
-                    <TabItem Header="Другие графики">
+                    <TabItem Header="Функция распрделения">
                         <d3:ChartPlotter Margin="5" x:Name="Plotter2">
 
                         </d3:ChartPlotter>
@@ -113,12 +113,12 @@
                 </Grid.RowDefinitions>
                 <ListView Margin="5" Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Log3}"/>
                 <TabControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" >
-                    <TabItem Header="Гистограмма">
+                    <TabItem Header="Гистограмма, Плотность распределения">
                         <d3:ChartPlotter Margin="5" x:Name="Plotter3BarChart">
 
                         </d3:ChartPlotter>
                     </TabItem>
-                    <TabItem Header="Другие графики">
+                    <TabItem Header="Фукция распределения">
                         <d3:ChartPlotter Margin="5" x:Name="Plotter3">
 
                         </d3:ChartPlotter>

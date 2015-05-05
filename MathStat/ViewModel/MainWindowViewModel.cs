@@ -238,7 +238,7 @@ namespace MathStat.ViewModel
                 }
                 if (CheckBox1Checked)
                 {
-                    using (var file = File.OpenWrite(OutputFile))
+                    using (var file = File.Create(OutputFile))
                     {
                         using (var stream = new StreamWriter(file))
                         {
@@ -276,6 +276,44 @@ namespace MathStat.ViewModel
                     distributionFuncList.Add(new Tuple<double, double>(interval.Left, sum));
                     sum += interval.Probability;
                 }
+                Log2.Add(DistributionDensityFuncString);
+                foreach (var interval in data)
+                {
+                    Log2.Add(string.Format("[{0}; {1}]: f* = {2}",
+                        interval.Left.ToString("F6", CultureInfo.InvariantCulture),
+                        interval.Right.ToString("F6", CultureInfo.InvariantCulture),
+                        interval.ProbabilityDensity.ToString("F6", CultureInfo.InvariantCulture)));
+                }
+                Log2.Add("y                    F_emp(y)");
+                foreach (var tuple in distributionFuncList)
+                {
+                    Log2.Add(string.Format("{0}       {1}", tuple.Item1.ToString("F6", CultureInfo.InvariantCulture),
+                        tuple.Item2.ToString("F6", CultureInfo.InvariantCulture)));
+                }
+                if (CheckBox2Checked)
+                {
+                    using (var file = File.Create(OutputFile))
+                    {
+                        using (var stream = new StreamWriter(file))
+                        {
+                            stream.WriteLine("left border;right border;probability density");
+                            foreach (var interval in data)
+                            {
+                                stream.WriteLine("{0};{1};{2}",
+                                    interval.Left.ToString("F6", CultureInfo.InvariantCulture),
+                                    interval.Right.ToString("F6", CultureInfo.InvariantCulture),
+                                    interval.ProbabilityDensity.ToString("F6", CultureInfo.InvariantCulture));
+                            }
+                            stream.WriteLine("y;F_emp(y)");
+                            foreach (var tuple in distributionFuncList)
+                            {
+                                stream.WriteLine("{0};{1}",
+                                    tuple.Item1.ToString("F6", CultureInfo.InvariantCulture),
+                                    tuple.Item2.ToString("F6", CultureInfo.InvariantCulture));
+                            }
+                        }
+                    }
+                }
                 var barChartColor = GetRandomColor();
                 var polygonColor = GetRandomColor();
                 var distributionFuncColor = GetRandomColor();
@@ -288,10 +326,13 @@ namespace MathStat.ViewModel
                 Utility.PlotDistributionFunc(distributionFuncList.ToArray(), plotter, distributionFuncColor,
                     "Distribution Fuction");
                 Utility.PlotFunc(plotter, funcColor, DistributionFunc, 0, 1, 1e-2, "Theoretical Function");
+                Utility.PlotFunc(plotterBarChart, funcColor, DistributionDensityFunc, 0, 0.999, 1e-2,
+                    "Theoretical Function");
                 distributionFuncList.Add(new Tuple<double, double>(1, DistributionFunc(1)));
                 Utility.PlotPolyLine(distributionFuncList.ToArray(), plotter, polygonColor,
                     "Distribution Polygon");
                 plotter.FitToView();
+                plotterBarChart.FitToView();
             }
             catch (Exception e)
             {
@@ -316,6 +357,44 @@ namespace MathStat.ViewModel
                     distributionFuncList.Add(new Tuple<double, double>(interval.Left, sum));
                     sum += interval.Probability;
                 }
+                Log3.Add(DistributionDensityFuncString);
+                foreach (var interval in data)
+                {
+                    Log3.Add(string.Format("[{0}; {1}]: f* = {2}",
+                        interval.Left.ToString("F6", CultureInfo.InvariantCulture),
+                        interval.Right.ToString("F6", CultureInfo.InvariantCulture),
+                        interval.ProbabilityDensity.ToString("F6", CultureInfo.InvariantCulture)));
+                }
+                Log3.Add("y                    F_emp(y)");
+                foreach (var tuple in distributionFuncList)
+                {
+                    Log3.Add(string.Format("{0}       {1}", tuple.Item1.ToString("F6", CultureInfo.InvariantCulture),
+                        tuple.Item2.ToString("F6", CultureInfo.InvariantCulture)));
+                }
+                if (CheckBox3Checked)
+                {
+                    using (var file = File.Create(OutputFile))
+                    {
+                        using (var stream = new StreamWriter(file))
+                        {
+                            stream.WriteLine("left border;right border;probability density");
+                            foreach (var interval in data)
+                            {
+                                stream.WriteLine("{0};{1};{2}",
+                                    interval.Left.ToString("F6", CultureInfo.InvariantCulture),
+                                    interval.Right.ToString("F6", CultureInfo.InvariantCulture),
+                                    interval.ProbabilityDensity.ToString("F6", CultureInfo.InvariantCulture));
+                            }
+                            stream.WriteLine("y;F_emp(y)");
+                            foreach (var tuple in distributionFuncList)
+                            {
+                                stream.WriteLine("{0};{1}",
+                                    tuple.Item1.ToString("F6", CultureInfo.InvariantCulture),
+                                    tuple.Item2.ToString("F6", CultureInfo.InvariantCulture));
+                            }
+                        }
+                    }
+                }
                 var barChartColor = GetRandomColor();
                 var polygonColor = GetRandomColor();
                 var distributionFuncColor = GetRandomColor();
@@ -328,10 +407,13 @@ namespace MathStat.ViewModel
                 Utility.PlotDistributionFunc(distributionFuncList.ToArray(), plotter, distributionFuncColor,
                     "Distribution Fuction");
                 Utility.PlotFunc(plotter, funcColor, DistributionFunc, 0, 1, 1e-2, "Theoretical Function");
+                Utility.PlotFunc(plotterBarChart, funcColor, DistributionDensityFunc, 0, 0.999, 1e-2,
+                    "Theoretical Function");
                 distributionFuncList.Add(new Tuple<double, double>(1, DistributionFunc(1)));
                 Utility.PlotPolyLine(distributionFuncList.ToArray(), plotter, polygonColor,
                     "Distribution Polygon");
                 plotter.FitToView();
+                plotterBarChart.FitToView();
             }
             catch (Exception e)
             {
