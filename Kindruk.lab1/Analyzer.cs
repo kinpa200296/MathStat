@@ -19,14 +19,20 @@ namespace Kindruk.lab1
         {
             var res = new List<Tuple<double, double>>();
             var size = variationalSeries.Length;
+            var cnt = 0;
             for (var i = 1; i < size; i++)
             {
                 if (Math.Abs(variationalSeries[i] - variationalSeries[i - 1]) > Epsilon)
                 {
-                    res.Add(new Tuple<double, double>(variationalSeries[i - 1], ((double) i - 1)/size));
+                    res.Add(new Tuple<double, double>(variationalSeries[i - 1], ((double) i - 1 - cnt)/size));
+                    cnt = 0;
+                }
+                else
+                {
+                    cnt++;
                 }
             }
-            res.Add(new Tuple<double, double>(variationalSeries[size - 1], ((double) (size - 1)/size)));
+            res.Add(new Tuple<double, double>(variationalSeries[size - 1], ((double) (size - 1 - cnt)/size)));
             return res.ToArray();
         }
     }
