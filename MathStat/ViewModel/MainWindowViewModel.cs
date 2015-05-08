@@ -270,10 +270,13 @@ namespace MathStat.ViewModel
                         SampleSize2));
                 var data = Kindruk.lab2.Analyzer.SplitSampleEqualIntervals(p, IntervalCount2);
                 var distributionFuncList = new List<Tuple<double, double>>();
+                var distributionPolygonPoints = new List<Tuple<double, double>>();
                 var sum = 0.0;
+                distributionPolygonPoints.Add(new Tuple<double, double>(0.0, 0.0));
                 foreach (var interval in data)
                 {
                     distributionFuncList.Add(new Tuple<double, double>(interval.Left, sum));
+                    distributionPolygonPoints.Add(new Tuple<double, double>(interval.Right, interval.ProbabilityDensity));
                     sum += interval.Probability;
                 }
                 Log2.Add(DistributionDensityFuncString);
@@ -328,8 +331,7 @@ namespace MathStat.ViewModel
                 Utility.PlotFunc(plotter, funcColor, DistributionFunc, 0, 1, 1e-2, "Theoretical Function");
                 Utility.PlotFunc(plotterBarChart, funcColor, DistributionDensityFunc, 0, 0.999, 1e-2,
                     "Theoretical Function");
-                distributionFuncList.Add(new Tuple<double, double>(1, DistributionFunc(1)));
-                Utility.PlotPolyLine(distributionFuncList.ToArray(), plotter, polygonColor,
+                Utility.PlotPolyLine(distributionPolygonPoints.ToArray(), plotterBarChart, polygonColor,
                     "Distribution Polygon");
                 plotter.FitToView();
                 plotterBarChart.FitToView();
@@ -351,10 +353,13 @@ namespace MathStat.ViewModel
                         SampleSize3));
                 var data = Kindruk.lab3.Analyzer.SplitSampleEqualProbability(p, IntervalCount3);
                 var distributionFuncList = new List<Tuple<double, double>>();
+                var distributionPolygonPoints = new List<Tuple<double, double>>();
                 var sum = 0.0;
+                distributionPolygonPoints.Add(new Tuple<double, double>(0.0, 0.0));
                 foreach (var interval in data)
                 {
                     distributionFuncList.Add(new Tuple<double, double>(interval.Left, sum));
+                    distributionPolygonPoints.Add(new Tuple<double, double>(interval.Right, interval.ProbabilityDensity));
                     sum += interval.Probability;
                 }
                 Log3.Add(DistributionDensityFuncString);
@@ -410,7 +415,7 @@ namespace MathStat.ViewModel
                 Utility.PlotFunc(plotterBarChart, funcColor, DistributionDensityFunc, 0, 0.999, 1e-2,
                     "Theoretical Function");
                 distributionFuncList.Add(new Tuple<double, double>(1, DistributionFunc(1)));
-                Utility.PlotPolyLine(distributionFuncList.ToArray(), plotter, polygonColor,
+                Utility.PlotPolyLine(distributionPolygonPoints.ToArray(), plotterBarChart, polygonColor,
                     "Distribution Polygon");
                 plotter.FitToView();
                 plotterBarChart.FitToView();
