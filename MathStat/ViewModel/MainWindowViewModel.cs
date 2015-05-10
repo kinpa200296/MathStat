@@ -17,20 +17,35 @@ namespace MathStat.ViewModel
     {
         private Random _random;
         private string _inputFile, _outputFile;
-        private int _sampleSize1, _sampleSize2, _sampleSize3, _intervalCount2, _intervalCount3;
+        private int _sampleSize1, _sampleSize2, _sampleSize3, _sampleSize4, _sampleSize5, _intervalCount2,
+            _intervalCount3, _intervalCount4;
         private bool _checkBox1Checked, _checkBox2Checked, _checkBox3Checked;
+        private double _tableValue4;
 
         public Func<double, double> DistributionFunc = d => Math.Asin(d)*2/Math.PI;
         public string DistributionFuncString = "F(y) = 2/pi*asin(y)";
         public Func<double, double> DistributionDensityFunc = d => 2/Math.PI/Math.Sqrt(1 - d*d);
         public string DistributionDensityFuncString = "f(y) = 2/pi/(1-y^2)^(1/2)";
 
+        public enum Method4
+        {
+            Pirson, Kolmorogov, Mizes
+        }
+
+        public enum Target5
+        {
+            ExpectedValue, Variance
+        }
 
         #region Properties
 
         public ObservableCollection<string> Log1 { get; set; }
         public ObservableCollection<string> Log2 { get; set; }
         public ObservableCollection<string> Log3 { get; set; }
+        public ObservableCollection<string> Log4 { get; set; }
+        public ObservableCollection<string> Log5 { get; set; }
+        public Method4 ChoosenMethod4 { get; set; }
+        public Target5 ChoosenTarget5 { get; set; }
 
         public string InputFile
         {
@@ -82,6 +97,26 @@ namespace MathStat.ViewModel
             }
         }
 
+        public int SampleSize4
+        {
+            get { return _sampleSize4; }
+            set
+            {
+                _sampleSize4 = value;
+                OnPropertyChanged("SampleSize4");
+            }
+        }
+
+        public int SampleSize5
+        {
+            get { return _sampleSize5; }
+            set
+            {
+                _sampleSize5 = value;
+                OnPropertyChanged("SampleSize5");
+            }
+        }
+
         public int IntervalCount2
         {
             get { return _intervalCount2; }
@@ -99,6 +134,16 @@ namespace MathStat.ViewModel
             {
                 _intervalCount3 = value;
                 OnPropertyChanged("IntervalCount3");
+            }
+        }
+
+        public int IntervalCount4
+        {
+            get { return _intervalCount4; }
+            set
+            {
+                _intervalCount4 = value;
+                OnPropertyChanged("IntervalCount4");
             }
         }
 
@@ -132,6 +177,16 @@ namespace MathStat.ViewModel
             }
         }
 
+        public double TableValue4
+        {
+            get { return _tableValue4; }
+            set
+            {
+                _tableValue4 = value;
+                OnPropertyChanged("TableValue4");
+            }
+        }
+
         #endregion
 
         #region Consructors
@@ -144,10 +199,13 @@ namespace MathStat.ViewModel
             Log1 = new ObservableCollection<string>();
             Log2 = new ObservableCollection<string>();
             Log3 = new ObservableCollection<string>();
+            Log4 = new ObservableCollection<string>();
+            Log5 = new ObservableCollection<string>();
 
             SampleSize1 = 40;
             SampleSize2 = 100;
             SampleSize3 = 100;
+            SampleSize5 = 20;
 
             _intervalCount2 = 10;
             _intervalCount3 = 10;
@@ -157,6 +215,9 @@ namespace MathStat.ViewModel
             CheckBox1Checked = false;
             CheckBox2Checked = false;
             CheckBox3Checked = false;
+
+            PirsonChoosenExecute();
+            ExpectedValueChoosenExecute();
         }
 
         #endregion
@@ -171,6 +232,31 @@ namespace MathStat.ViewModel
         public ICommand SaveFileDialog
         {
             get { return new RelayCommand(SaveFileDialogExecute); }
+        }
+
+        public ICommand PirsonChoosen
+        {
+            get { return new RelayCommand(PirsonChoosenExecute); }
+        }
+
+        public ICommand KolmogorovChoosen
+        {
+            get { return new RelayCommand(KolmogorovChoosenExecute); }
+        }
+
+        public ICommand MizesChoosen
+        {
+            get { return new RelayCommand(MizesChoosenExecute); }
+        }
+
+        public ICommand ExpectedValueChoosen
+        {
+            get { return new RelayCommand(ExpectedValueChoosenExecute); }
+        }
+
+        public ICommand VarianceChoosen 
+        {
+            get { return new RelayCommand(VarianceChoosenExecute);}
         }
 
         #endregion
@@ -423,6 +509,119 @@ namespace MathStat.ViewModel
             catch (Exception e)
             {
                 Log3.Add(e.Message);
+            }
+        }
+
+        public void PirsonChoosenExecute()
+        {
+            ChoosenMethod4 = Method4.Pirson;
+            SampleSize4 = 200;
+            IntervalCount4 = 10;
+            TableValue4 = 14.07;
+        }
+
+        public void KolmogorovChoosenExecute()
+        {
+            ChoosenMethod4 = Method4.Kolmorogov;
+            SampleSize4 = 30;
+            IntervalCount4 = 0;
+            TableValue4 = 1.36;
+        }
+
+        public void MizesChoosenExecute()
+        {
+            ChoosenMethod4 = Method4.Mizes;
+            SampleSize4 = 50;
+            IntervalCount4 = 0;
+            TableValue4 = 0.347;
+        }
+
+        public void DoAction4Execute(ChartPlotter plotter)
+        {
+            Log4.Clear();
+            try
+            {
+                var p =
+                    Analyzer.GetVariationalSeries(SampleBuilder.GetSample(new EvenlyDistributedNumber(0, Math.PI),
+                        Math.Sin,
+                        SampleSize4));
+                var res = 0.0;
+                var distributionFunc = DistributionFunc;
+                var distributionDensityFunc = DistributionDensityFunc;
+                plotter.Children.RemoveAll(typeof(LineGraph));
+                plotter.Children.RemoveAll(typeof(MarkerPointsGraph));
+                switch (ChoosenMethod4)
+                {
+                    case Method4.Pirson:
+                        res = Kindruk.lab4.Analyzer.Pirson(p, distributionFunc, IntervalCount4);
+                        var intervals = Kindruk.lab3.Analyzer.SplitSampleEqualProbability(p, IntervalCount4);
+                        var barChartColor = GetRandomColor();
+                        var densityFuncColor = GetRandomColor();
+                        Utility.PlotBarChart(plotter, barChartColor, intervals, "Bar Chart");
+                        Utility.PlotFunc(plotter, densityFuncColor, distributionDensityFunc, 0, 0.999, 1e-2,
+                            "Theoretical Function");
+                        break;
+                    case Method4.Kolmorogov:
+                        res = Kindruk.lab4.Analyzer.Kolmogorov(p, distributionFunc);
+                        break;
+                    case Method4.Mizes:
+                        res = Kindruk.lab4.Analyzer.Mizes(p, distributionFunc);
+                        break;
+                }
+                if (ChoosenMethod4 != Method4.Pirson)
+                {
+                    var data = Analyzer.GetEmpiricalFuncData(p);
+                    var empiricalColor = GetRandomColor();
+                    var funcColor = GetRandomColor();
+                    Utility.PlotDistributionFunc(data, plotter, empiricalColor, "Empirical Function");
+                    Utility.PlotFunc(plotter, funcColor, distributionFunc, 0, 1, 1e-2, "Theoretical Function");
+                }
+                plotter.Viewport.FitToView();
+                Log4.Add(string.Format("{0} {2} {1}", res.ToString("F6", CultureInfo.InvariantCulture),
+                    TableValue4.ToString("F6", CultureInfo.InvariantCulture), res <= TableValue4 ? "<=" : ">"));
+                Log4.Add(res <= TableValue4
+                    ? "There is no reason to reject the hypothesis H0"
+                    : "There is no reason to accept the hypothesis H0");
+                Log4.Add("Initial sample:");
+                foreach (var d in p)
+                {
+                    Log4.Add(d.ToString("F6", CultureInfo.InvariantCulture));
+                }
+            }
+            catch (Exception e)
+            {
+                Log4.Add(e.Message);
+            }
+        }
+
+        public void ExpectedValueChoosenExecute()
+        {
+            ChoosenTarget5 = Target5.ExpectedValue;
+        }
+
+        public void VarianceChoosenExecute()
+        {
+            ChoosenTarget5 = Target5.Variance;
+        }
+
+        public void DoAction5Execute(ChartPlotter plotter)
+        {
+            Log5.Clear();
+            try
+            {
+                var p =
+                    Analyzer.GetVariationalSeries(SampleBuilder.GetSample(new EvenlyDistributedNumber(0, Math.PI),
+                        Math.Sin,
+                        SampleSize5));
+                Log5.Add("Initial sample:");
+                foreach (var d in p)
+                {
+                    Log5.Add(d.ToString("F6", CultureInfo.InvariantCulture));
+                }
+            }
+            catch (Exception e)
+            {
+                Log5.Add(e.Message);
             }
         }
 

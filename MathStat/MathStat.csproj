@@ -121,6 +121,10 @@
       <Project>{3e927fe3-3dfd-4b84-a1ec-c3ddd478d4a7}</Project>
       <Name>Kindruk.lab3</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Kindruk.lab4\Kindruk.lab4.csproj">
+      <Project>{50b4c660-7024-4759-b549-cb4454fd5e98}</Project>
+      <Name>Kindruk.lab4</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MathCommon\MathCommon.csproj">
       <Project>{ef5b607b-a338-44a1-bee0-46a3b57b67e5}</Project>
       <Name>MathCommon</Name>

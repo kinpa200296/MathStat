@@ -26,5 +26,15 @@ namespace MathStat.View
         {
             ViewModel.DoAction3Execute(Plotter3, Plotter3BarChart);
         }
+
+        private void Action4_OnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.DoAction4Execute(Plotter4);
+        }
+
+        private void Action5_OnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.DoAction5Execute(Plotter5);
+        }
     }
 }

@@ -69,7 +69,7 @@
 
                         </d3:ChartPlotter>
                     </TabItem>
-                    <TabItem Header="Функция распрделения">
+                    <TabItem Header="Функция распределения">
                         <d3:ChartPlotter Margin="5" x:Name="Plotter2">
 
                         </d3:ChartPlotter>
@@ -118,7 +118,7 @@
 
                         </d3:ChartPlotter>
                     </TabItem>
-                    <TabItem Header="Фукция распределения">
+                    <TabItem Header="Функция распределения">
                         <d3:ChartPlotter Margin="5" x:Name="Plotter3">
 
                         </d3:ChartPlotter>
@@ -149,13 +149,69 @@
                 <Button Grid.Row="1" Grid.Column="2" Content="Выполнить" x:Name="Action3" Click="Action3_OnClick"/>
             </Grid>
         </TabItem>
-        <TabItem Header="Лабораторная 4" 
-                 Visibility="Collapsed">
+        <TabItem Header="Лабораторная 4">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ListView Margin="5" Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Log4}"/>
+                <d3:ChartPlotter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2 " Margin="5" x:Name="Plotter4">
 
+                </d3:ChartPlotter>
+                <StackPanel Margin="5" Grid.Column="0" Grid.Row="1">
+                    <TextBlock Text="Размер выборки:"/>
+                    <TextBox Text="{Binding SampleSize4}"/>
+                    <TextBlock Text="Количество отрезков:"/>
+                    <TextBox Text="{Binding IntervalCount4}"/>
+                    <TextBlock Text="Табличное значение критерия:"/>
+                    <TextBox Text="{Binding TableValue4}"/>
+                </StackPanel>
+                <StackPanel Margin="5" Grid.Column="1" Grid.Row="1">
+                    <RadioButton Content="Критерий Пирсона" Margin="5"
+                             Command="{Binding PirsonChoosen}" IsChecked="True"/>
+                    <RadioButton Content="Критерий Колмогорова" Margin="5"
+                             Command="{Binding KolmogorovChoosen}"/>
+                    <RadioButton Content="Критерий Мизеса" Margin="5"
+                             Command="{Binding MizesChoosen}"/>
+                </StackPanel>
+                <Button Grid.Row="1" Grid.Column="2" Content="Выполнить" x:Name="Action4" Click="Action4_OnClick"/>
+            </Grid>
         </TabItem>
         <TabItem Header="Лабораторная 5"
                  Visibility="Collapsed">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ListView Margin="5" Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Log5}"/>
+                <d3:ChartPlotter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2 " Margin="5" x:Name="Plotter5">
 
+                </d3:ChartPlotter>
+                <StackPanel Margin="5" Grid.Column="0" Grid.Row="1">
+                    <TextBlock Text="Размер выборки:"/>
+                    <TextBox Text="{Binding SampleSize5}"/>
+                </StackPanel>
+                <StackPanel Margin="5" Grid.Column="1" Grid.Row="1">
+                    <TextBlock Text="Доверительный интервал для:"/>
+                    <RadioButton Content="Математического ожидания" Margin="5"
+                             Command="{Binding ExpectedValueChoosen}" IsChecked="True"/>
+                    <RadioButton Content="Дисперсии" Margin="5"
+                             Command="{Binding VarianceChoosen}"/>
+                </StackPanel>
+                <Button Grid.Row="1" Grid.Column="2" Content="Выполнить" x:Name="Action5" Click="Action5_OnClick"/>
+            </Grid>
         </TabItem>
     </TabControl>
 </Window>
