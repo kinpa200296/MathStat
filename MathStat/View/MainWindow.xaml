@@ -183,9 +183,8 @@
                 <Button Grid.Row="1" Grid.Column="2" Content="Выполнить" x:Name="Action4" Click="Action4_OnClick"/>
             </Grid>
         </TabItem>
-        <TabItem Header="Лабораторная 5"
-                 Visibility="Collapsed">
-            <Grid>
+        <TabItem Header="Лабораторная 5">
+            <Grid Margin="0,-6,0,6">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -196,19 +195,45 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <ListView Margin="5" Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Log5}"/>
-                <d3:ChartPlotter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2 " Margin="5" x:Name="Plotter5">
+                <TabControl Margin="5" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                    <TabItem Header="Интервалы">
+                        <d3:ChartPlotter x:Name="Plotter5">
 
-                </d3:ChartPlotter>
-                <StackPanel Margin="5" Grid.Column="0" Grid.Row="1">
-                    <TextBlock Text="Размер выборки:"/>
+                        </d3:ChartPlotter>
+                    </TabItem>
+                    <TabItem Header="Размеры интервалов" Margin="-2,-1">
+                        <d3:ChartPlotter x:Name="Plotter5Sizes">
+
+                        </d3:ChartPlotter>
+                    </TabItem>
+                </TabControl>
+                <StackPanel Margin="5" Grid.Column="0" Grid.Row="1" Visibility="{Binding Display5Sample, Converter={StaticResource visibilityConverter}}">
+                    <TextBlock Text="Размер выборки"/>
                     <TextBox Text="{Binding SampleSize5}"/>
+                    <TextBlock Text="Левая граница интервала доверительной вероятности"/>
+                    <TextBox Text="{Binding Left5Probability}"/>
+                    <TextBlock Text="Правая граница интервала доверительной вероятности"/>
+                    <TextBox Text="{Binding Right5Probability}"/>
+                </StackPanel>
+                <StackPanel Margin="5" Grid.Column="0" Grid.Row="1" Visibility="{Binding Display5Probability, Converter={StaticResource visibilityConverter}}">
+                    <TextBlock Text="Доверительная вероятность"/>
+                    <TextBox Text="{Binding ConfidencialProbabilty5}"/>
+                    <TextBlock Text="Левая граница интервала размера выборки"/>
+                    <TextBox Text="{Binding Left5SampleSize}"/>
+                    <TextBlock Text="Правая граница интервала размера выборки"/>
+                    <TextBox Text="{Binding Right5SampleSize}"/>
                 </StackPanel>
                 <StackPanel Margin="5" Grid.Column="1" Grid.Row="1">
                     <TextBlock Text="Доверительный интервал для:"/>
                     <RadioButton Content="Математического ожидания" Margin="5"
-                             Command="{Binding ExpectedValueChoosen}" IsChecked="True"/>
+                             Command="{Binding ExpectedValueChoosen}" GroupName="Value" IsChecked="True"/>
                     <RadioButton Content="Дисперсии" Margin="5"
-                             Command="{Binding VarianceChoosen}"/>
+                             Command="{Binding VarianceChoosen}" GroupName="Value"/>
+                    <TextBlock Text="Зафиксировать значение:"/>
+                    <RadioButton Content="Размера выборки" Margin="5"
+                             Command="{Binding SampleSizeChoosen}" GroupName="Argument" IsChecked="True"/>
+                    <RadioButton Content="Доверительной вероятности" Margin="5"
+                             Command="{Binding ConfidencialProbabiltyChoosen}" GroupName="Argument"/>
                 </StackPanel>
                 <Button Grid.Row="1" Grid.Column="2" Content="Выполнить" x:Name="Action5" Click="Action5_OnClick"/>
             </Grid>

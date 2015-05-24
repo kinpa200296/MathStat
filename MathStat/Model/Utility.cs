@@ -133,5 +133,33 @@ namespace MathStat.Model
             plotter.AddLineGraph(new CompositeDataSource(x, y), GetPen(color, 1.0, DashStyles.Solid),
                 GetPenDescription(description, Visibility.Visible));
         }
+
+        public static void PlotConfidencialIntervals(ChartPlotter plotter, Color color,
+            ConfidencialInterval[] intervals, string description)
+        {
+            var x = new EnumerableDataSource<double>(intervals.Select(q => q.ConfidencialProbability));
+            x.SetXMapping(q => q);
+            var y1 = new EnumerableDataSource<double>(intervals.Select(q => q.Left));
+            y1.SetYMapping(q => q);
+            var y2 = new EnumerableDataSource<double>(intervals.Select(q => q.Right));
+            y2.SetYMapping(q => q);
+            plotter.AddLineGraph(new CompositeDataSource(x, y1), GetPen(color, 1.0, DashStyles.Solid),
+                GetPenDescription(description, Visibility.Collapsed));
+            plotter.AddLineGraph(new CompositeDataSource(x, y2), GetPen(color, 1.0, DashStyles.Solid),
+                GetPenDescription(description, Visibility.Visible));
+        }
+
+        public static void PlotLine(ChartPlotter plotter, Color color, double left, double right, double val,
+            string description)
+        {
+            var t1 = new[] {left, right};
+            var t2 = new[] {val, val};
+            var x = new EnumerableDataSource<double>(t1);
+            x.SetXMapping(q => q);
+            var y = new EnumerableDataSource<double>(t2);
+            y.SetYMapping(q => q);
+            plotter.AddLineGraph(new CompositeDataSource(x, y), GetPen(color, 1.0, DashStyles.Solid),
+                GetPenDescription(description, Visibility.Visible));
+        }
     }
 }

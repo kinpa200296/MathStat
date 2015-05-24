@@ -34,7 +34,7 @@ namespace MathStat.View
 
         private void Action5_OnClick(object sender, RoutedEventArgs e)
         {
-            ViewModel.DoAction5Execute(Plotter5);
+            ViewModel.DoAction5Execute(Plotter5, Plotter5Sizes);
         }
     }
 }

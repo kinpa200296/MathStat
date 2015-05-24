@@ -15,6 +15,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathCommon", "MathCommon\Ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kindruk.lab4", "Kindruk.lab4\Kindruk.lab4.csproj", "{50B4C660-7024-4759-B549-CB4454FD5E98}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tables", "tables", "{3692F29D-C444-4DB0-BBBE-7963CB446F80}"
+	ProjectSection(SolutionItems) = preProject
+		tables\normal.csv = tables\normal.csv
+		tables\student.csv = tables\student.csv
+		tables\xi2.csv = tables\xi2.csv
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kindruk.lab5", "Kindruk.lab5\Kindruk.lab5.csproj", "{E5CF2134-4D0C-41A6-A4CA-8346A71733EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +54,10 @@ Global
 		{50B4C660-7024-4759-B549-CB4454FD5E98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50B4C660-7024-4759-B549-CB4454FD5E98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50B4C660-7024-4759-B549-CB4454FD5E98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5CF2134-4D0C-41A6-A4CA-8346A71733EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5CF2134-4D0C-41A6-A4CA-8346A71733EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5CF2134-4D0C-41A6-A4CA-8346A71733EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5CF2134-4D0C-41A6-A4CA-8346A71733EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
