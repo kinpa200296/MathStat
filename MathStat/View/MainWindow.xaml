@@ -3,240 +3,28 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:MathStat.ViewModel"
         xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0"
-        Title="Math Stat Labs" Height="500" Width="600">
+        Title="Math Stat Labs" Height="600" Width="600">
     <Window.Resources>
-        <vm:VisibilityConverter x:Key="visibilityConverter" />
+        <vm:VisibilityConverter x:Key="VisibilityConverter" />
     </Window.Resources>
     <Window.DataContext>
         <vm:MainWindowViewModel x:Name="ViewModel"/>
     </Window.DataContext>
     <TabControl>
         <TabItem Header="Лабораторная 1">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="4*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <d3:ChartPlotter Margin="5" Grid.Row ="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="Plotter1">
-                    
-                    <d3:Header Content="Функция распределения"/>
-                </d3:ChartPlotter>
-                <ListView Margin="5" Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Log1}"/>
-                <StackPanel Margin="5" Grid.Column="0" Grid.Row="1">
-                    <TextBlock Text="Размер выборки:"/>
-                    <TextBox Text="{Binding SampleSize1}"/>
-                </StackPanel>
-                <StackPanel Margin="5" Grid.Column="1" Grid.Row="1">
-                    <CheckBox x:Name="CheckBox1" Content="Вывести в CSV-файл"
-                              IsChecked="{Binding CheckBox1Checked}"/>
-                    <StackPanel Visibility="{Binding ElementName=CheckBox1, Path=IsChecked, Converter={StaticResource visibilityConverter}}">
-                        <TextBlock Text="Выберите файл:"/>
-                        <TextBox TextWrapping="Wrap" ToolTip="Выходной файл">
-                            <TextBox.Text>
-                                <Binding Path="OutputFile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                <vm:FileNameValidationRule ShouldExist="False" ValidatesOnTargetUpdated="True"/>
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                        <Button Content="Выбрать файл" Command="{Binding SaveFileDialog}"/>
-                    </StackPanel>
-                </StackPanel>
-                <Button Grid.Row="1" Grid.Column="2" Content="Выполнить" x:Name="Action1" Click="Action1_OnClick"/>
-            </Grid>
+            <Frame Source="Lab1.xaml" NavigationUIVisibility="Hidden"/>
         </TabItem>
         <TabItem Header="Лабораторная 2">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="4*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <ListView Margin="5" Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Log2}"/>
-                <TabControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" >
-                    <TabItem Header="Гистограмма, Плотность распределения">
-                        <d3:ChartPlotter Margin="5" x:Name="Plotter2BarChart">
-
-                        </d3:ChartPlotter>
-                    </TabItem>
-                    <TabItem Header="Функция распределения">
-                        <d3:ChartPlotter Margin="5" x:Name="Plotter2">
-
-                        </d3:ChartPlotter>
-                    </TabItem>
-                </TabControl>
-                <StackPanel Margin="5" Grid.Column="0" Grid.Row="1">
-                    <TextBlock Text="Размер выборки:"/>
-                    <TextBox Text="{Binding SampleSize2}"/>
-                    <TextBlock Text="Количество отрезков:"/>
-                    <TextBox Text="{Binding IntervalCount2}"/>
-                </StackPanel>
-                <StackPanel Margin="5" Grid.Column="1" Grid.Row="1">
-                    <CheckBox x:Name="CheckBox2" Content="Вывести в CSV-файл" IsChecked="{Binding CheckBox2Checked}"/>
-                    <StackPanel Visibility="{Binding ElementName=CheckBox2, Path=IsChecked, Converter={StaticResource visibilityConverter}}">
-                        <TextBlock Text="Выберите файл:"/>
-                        <TextBox TextWrapping="Wrap" ToolTip="Выходной файл">
-                            <TextBox.Text>
-                                <Binding Path="OutputFile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <vm:FileNameValidationRule ShouldExist="False" ValidatesOnTargetUpdated="True"/>
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                        <Button Content="Выбрать файл" Command="{Binding SaveFileDialog}"/>
-                    </StackPanel>
-                </StackPanel>
-                <Button Grid.Row="1" Grid.Column="2" Content="Выполнить" x:Name="Action2" Click="Action2_OnClick"/>
-            </Grid>
+            <Frame Source="Lab2.xaml" NavigationUIVisibility="Hidden"/>
         </TabItem>
         <TabItem Header="Лабораторная 3">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="4*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <ListView Margin="5" Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Log3}"/>
-                <TabControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" >
-                    <TabItem Header="Гистограмма, Плотность распределения">
-                        <d3:ChartPlotter Margin="5" x:Name="Plotter3BarChart">
-
-                        </d3:ChartPlotter>
-                    </TabItem>
-                    <TabItem Header="Функция распределения">
-                        <d3:ChartPlotter Margin="5" x:Name="Plotter3">
-
-                        </d3:ChartPlotter>
-                    </TabItem>
-                </TabControl>
-                <StackPanel Margin="5" Grid.Column="0" Grid.Row="1">
-                    <TextBlock Text="Размер выборки:"/>
-                    <TextBox Text="{Binding SampleSize3}"/>
-                    <TextBlock Text="Количество отрезков:"/>
-                    <TextBox Text="{Binding IntervalCount3}"/>
-                </StackPanel>
-                <StackPanel Margin="5" Grid.Column="1" Grid.Row="1">
-                    <CheckBox x:Name="CheckBox3" Content="Вывести в CSV-файл" IsChecked="{Binding CheckBox3Checked}"/>
-                    <StackPanel Visibility="{Binding ElementName=CheckBox3, Path=IsChecked, Converter={StaticResource visibilityConverter}}">
-                        <TextBlock Text="Выберите файл:"/>
-                        <TextBox TextWrapping="Wrap" ToolTip="Выходной файл">
-                            <TextBox.Text>
-                                <Binding Path="OutputFile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <vm:FileNameValidationRule ShouldExist="False" ValidatesOnTargetUpdated="True"/>
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                        <Button Content="Выбрать файл" Command="{Binding SaveFileDialog}"/>
-                    </StackPanel>
-                </StackPanel>
-                <Button Grid.Row="1" Grid.Column="2" Content="Выполнить" x:Name="Action3" Click="Action3_OnClick"/>
-            </Grid>
+            <Frame Source="Lab3.xaml" NavigationUIVisibility="Hidden"/>
         </TabItem>
         <TabItem Header="Лабораторная 4">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="4*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <ListView Margin="5" Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Log4}"/>
-                <d3:ChartPlotter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2 " Margin="5" x:Name="Plotter4">
-
-                </d3:ChartPlotter>
-                <StackPanel Margin="5" Grid.Column="0" Grid.Row="1">
-                    <TextBlock Text="Размер выборки:"/>
-                    <TextBox Text="{Binding SampleSize4}"/>
-                    <TextBlock Text="Количество отрезков:"/>
-                    <TextBox Text="{Binding IntervalCount4}"/>
-                    <TextBlock Text="Табличное значение критерия:"/>
-                    <TextBox Text="{Binding TableValue4}"/>
-                </StackPanel>
-                <StackPanel Margin="5" Grid.Column="1" Grid.Row="1">
-                    <RadioButton Content="Критерий Пирсона" Margin="5"
-                             Command="{Binding PirsonChoosen}" IsChecked="True"/>
-                    <RadioButton Content="Критерий Колмогорова" Margin="5"
-                             Command="{Binding KolmogorovChoosen}"/>
-                    <RadioButton Content="Критерий Мизеса" Margin="5"
-                             Command="{Binding MizesChoosen}"/>
-                </StackPanel>
-                <Button Grid.Row="1" Grid.Column="2" Content="Выполнить" x:Name="Action4" Click="Action4_OnClick"/>
-            </Grid>
+            <Frame Source="Lab4.xaml" NavigationUIVisibility="Hidden"/>
         </TabItem>
         <TabItem Header="Лабораторная 5">
-            <Grid Margin="0,-6,0,6">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="4*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <ListView Margin="5" Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Log5}"/>
-                <TabControl Margin="5" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                    <TabItem Header="Интервалы">
-                        <d3:ChartPlotter x:Name="Plotter5">
-
-                        </d3:ChartPlotter>
-                    </TabItem>
-                    <TabItem Header="Размеры интервалов" Margin="-2,-1">
-                        <d3:ChartPlotter x:Name="Plotter5Sizes">
-
-                        </d3:ChartPlotter>
-                    </TabItem>
-                </TabControl>
-                <StackPanel Margin="5" Grid.Column="0" Grid.Row="1" Visibility="{Binding Display5Sample, Converter={StaticResource visibilityConverter}}">
-                    <TextBlock Text="Размер выборки"/>
-                    <TextBox Text="{Binding SampleSize5}"/>
-                    <TextBlock Text="Левая граница интервала доверительной вероятности"/>
-                    <TextBox Text="{Binding Left5Probability}"/>
-                    <TextBlock Text="Правая граница интервала доверительной вероятности"/>
-                    <TextBox Text="{Binding Right5Probability}"/>
-                </StackPanel>
-                <StackPanel Margin="5" Grid.Column="0" Grid.Row="1" Visibility="{Binding Display5Probability, Converter={StaticResource visibilityConverter}}">
-                    <TextBlock Text="Доверительная вероятность"/>
-                    <TextBox Text="{Binding ConfidencialProbabilty5}"/>
-                    <TextBlock Text="Левая граница интервала размера выборки"/>
-                    <TextBox Text="{Binding Left5SampleSize}"/>
-                    <TextBlock Text="Правая граница интервала размера выборки"/>
-                    <TextBox Text="{Binding Right5SampleSize}"/>
-                </StackPanel>
-                <StackPanel Margin="5" Grid.Column="1" Grid.Row="1">
-                    <TextBlock Text="Доверительный интервал для:"/>
-                    <RadioButton Content="Математического ожидания" Margin="5"
-                             Command="{Binding ExpectedValueChoosen}" GroupName="Value" IsChecked="True"/>
-                    <RadioButton Content="Дисперсии" Margin="5"
-                             Command="{Binding VarianceChoosen}" GroupName="Value"/>
-                    <TextBlock Text="Зафиксировать значение:"/>
-                    <RadioButton Content="Размера выборки" Margin="5"
-                             Command="{Binding SampleSizeChoosen}" GroupName="Argument" IsChecked="True"/>
-                    <RadioButton Content="Доверительной вероятности" Margin="5"
-                             Command="{Binding ConfidencialProbabiltyChoosen}" GroupName="Argument"/>
-                </StackPanel>
-                <Button Grid.Row="1" Grid.Column="2" Content="Выполнить" x:Name="Action5" Click="Action5_OnClick"/>
-            </Grid>
+            <Frame Source="Lab5.xaml" NavigationUIVisibility="Hidden"/>
         </TabItem>
     </TabControl>
 </Window>

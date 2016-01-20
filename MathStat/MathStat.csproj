@@ -84,10 +84,31 @@
     </Compile>
     <Compile Include="Model\Utility.cs" />
     <Compile Include="ViewModel\FileNameValidationRule.cs" />
+    <Compile Include="ViewModel\Lab1ViewModel.cs" />
+    <Compile Include="ViewModel\Lab2ViewModel.cs" />
+    <Compile Include="ViewModel\Lab3ViewModel.cs" />
+    <Compile Include="ViewModel\Lab4ViewModel.cs" />
+    <Compile Include="ViewModel\Lab5ViewModel.cs" />
+    <Compile Include="ViewModel\LabBaseViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="ViewModel\ViewModeBase.cs" />
     <Compile Include="ViewModel\VisibilityConverter.cs" />
+    <Compile Include="View\Lab1.xaml.cs">
+      <DependentUpon>Lab1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Lab2.xaml.cs">
+      <DependentUpon>Lab2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Lab3.xaml.cs">
+      <DependentUpon>Lab3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Lab4.xaml.cs">
+      <DependentUpon>Lab4.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Lab5.xaml.cs">
+      <DependentUpon>Lab5.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -121,6 +142,26 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\Lab1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Lab2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Lab3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Lab4.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Lab5.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

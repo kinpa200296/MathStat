@@ -1,0 +1,70 @@
+﻿<Page x:Class="MathStat.View.Lab5"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:vm="clr-namespace:MathStat.ViewModel"
+      xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="600"
+	  Title="Lab5">
+    <Page.Resources>
+        <vm:VisibilityConverter x:Key="VisibilityConverter" />
+    </Page.Resources>
+    <Page.DataContext>
+        <vm:Lab5ViewModel x:Name="ViewModel"/>
+    </Page.DataContext>
+    <Grid Margin="0,-6,0,6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ListView Margin="5" Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Log}"/>
+        <TabControl Margin="5" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <TabItem Header="Интервалы">
+                <d3:ChartPlotter x:Name="Plotter">
+
+                </d3:ChartPlotter>
+            </TabItem>
+            <TabItem Header="Размеры интервалов" Margin="-2,-1">
+                <d3:ChartPlotter x:Name="PlotterSizes">
+
+                </d3:ChartPlotter>
+            </TabItem>
+        </TabControl>
+        <StackPanel Margin="5" Grid.Column="0" Grid.Row="1" Visibility="{Binding DisplaySample, Converter={StaticResource VisibilityConverter}}">
+            <TextBlock Text="Размер выборки"/>
+            <TextBox Text="{Binding SampleSize}"/>
+            <TextBlock Text="Левая граница интервала доверительной вероятности"/>
+            <TextBox Text="{Binding ProbabilityLeftBorder}"/>
+            <TextBlock Text="Правая граница интервала доверительной вероятности"/>
+            <TextBox Text="{Binding ProbabilityRightBorder}"/>
+        </StackPanel>
+        <StackPanel Margin="5" Grid.Column="0" Grid.Row="1" Visibility="{Binding DisplayProbability, Converter={StaticResource VisibilityConverter}}">
+            <TextBlock Text="Доверительная вероятность"/>
+            <TextBox Text="{Binding ConfidencialProbabilty}"/>
+            <TextBlock Text="Левая граница интервала размера выборки"/>
+            <TextBox Text="{Binding SampleSizeLeftBorder}"/>
+            <TextBlock Text="Правая граница интервала размера выборки"/>
+            <TextBox Text="{Binding SampleSizeRightBorder}"/>
+        </StackPanel>
+        <StackPanel Margin="5" Grid.Column="1" Grid.Row="1">
+            <TextBlock Text="Доверительный интервал для:"/>
+            <RadioButton Content="Математического ожидания" Margin="5"
+                             Command="{Binding ExpectedValueChoosen}" GroupName="Value" IsChecked="True"/>
+            <RadioButton Content="Дисперсии" Margin="5"
+                             Command="{Binding VarianceChoosen}" GroupName="Value"/>
+            <TextBlock Text="Зафиксировать значение:"/>
+            <RadioButton Content="Размера выборки" Margin="5"
+                             Command="{Binding SampleSizeChoosen}" GroupName="Argument" IsChecked="True"/>
+            <RadioButton Content="Доверительной вероятности" Margin="5"
+                             Command="{Binding ConfidencialProbabiltyChoosen}" GroupName="Argument"/>
+        </StackPanel>
+        <Button Grid.Row="1" Grid.Column="2" Content="Выполнить" Click="DoAction"/>
+    </Grid>
+</Page>
